@@ -119,3 +119,47 @@ func HapusAssessment(id string) {
     jumlahData--
     fmt.Println("Data berhasil dihapus.")
 }
+
+func InsertionSortByTanggal(ascending bool) {
+    for i := 1; i < jumlahData; i++ {
+        temp := dataAssessment[i]
+        j := i - 1
+
+        if ascending {
+            for j >= 0 && dataAssessment[j].Tanggal.After(temp.Tanggal) {
+                dataAssessment[j+1] = dataAssessment[j]
+                j--
+            }
+        } else {
+            for j >= 0 && dataAssessment[j].Tanggal.Before(temp.Tanggal) {
+                dataAssessment[j+1] = dataAssessment[j]
+                j--
+            }
+        }
+        dataAssessment[j+1] = temp
+    }
+}
+
+func RataRataSkorSebulan(id string) {
+    totalSkor := 0
+    jumlah := 0
+    sekarang := time.Now()
+
+    for i := 0; i < jumlahData; i++ {
+        if dataAssessment[i].IDUser == id {
+            selisih := sekarang.Sub(dataAssessment[i].Tanggal)
+            if selisih.Hours() <= 720 { // 30 hari * 24 jam
+                totalSkor += dataAssessment[i].SkorTotal
+                jumlah++
+            }
+        }
+    }
+
+    if jumlah == 0 {
+        fmt.Println("Tidak ada data dalam 1 bulan terakhir.")
+        return
+    }
+
+    rata := float64(totalSkor) / float64(jumlah)
+    fmt.Printf("Rata-rata skor self-assessment %s dalam 1 bulan terakhir: %.2f\n", id, rata)
+}

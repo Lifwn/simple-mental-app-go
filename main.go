@@ -12,6 +12,8 @@ func main() {
 		fmt.Println("5. Tampilkan 5 terakhir")
 		fmt.Println("6. Ubah Data Assessment")
 		fmt.Println("7. Hapus Data Assessment")
+		fmt.Println("8. Urutkan berdasarkan Tanggal (Insertion Sort)")
+		fmt.Println("9. Rata-rata skor 1 bulan terakhir berdasarkan ID")
 		fmt.Println("0. Keluar")
 		pilihan := InputString("Pilih: ")
 
@@ -55,6 +57,22 @@ func main() {
 			id := InputString("Masukkan ID yang ingin dihapus: ")
 			HapusAssessment(id)
 
+		case "8":
+			urutan := InputString("Ascending (a) atau Descending (d)? ")
+			if urutan == "a" {
+				InsertionSortByTanggal(true)
+				fmt.Println("Data diurutkan berdasarkan tanggal naik.")
+			} else if urutan == "d" {
+				InsertionSortByTanggal(false)
+				fmt.Println("Data diurutkan berdasarkan tanggal turun.")
+			} else {
+				fmt.Println("Pilihan tidak valid.")
+			}
+
+			case "9":
+				id := InputString("Masukkan ID pengguna: ")
+				RataRataSkorSebulan(id)
+				
 		case "0":
 			return
 
