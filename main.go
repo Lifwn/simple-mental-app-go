@@ -10,6 +10,8 @@ func main() {
 		fmt.Println("3. Cari dengan Binary Search (butuh data terurut)")
 		fmt.Println("4. Urutkan berdasarkan Skor (Selection Sort)")
 		fmt.Println("5. Tampilkan 5 terakhir")
+		fmt.Println("6. Ubah Data Assessment")
+		fmt.Println("7. Hapus Data Assessment")
 		fmt.Println("0. Keluar")
 		pilihan := InputString("Pilih: ")
 
@@ -44,6 +46,14 @@ func main() {
 
 		case "5":
 			Tampilkan5Terakhir()
+		
+		case "6":
+			id := InputString("Masukkan ID yang ingin diubah: ")
+			UbahAssessment(id)
+
+		case "7":
+			id := InputString("Masukkan ID yang ingin dihapus: ")
+			HapusAssessment(id)
 
 		case "0":
 			return

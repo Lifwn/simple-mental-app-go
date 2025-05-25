@@ -67,13 +67,11 @@ func SelectionSortBySkor(ascending bool) {
 				}
 			}
 		}
-		// Tukar posisi
 		dataAssessment[i], dataAssessment[idx] = dataAssessment[idx], dataAssessment[i]
 	}
 }
 
 func Tampilkan5Terakhir() {
-	// Menampilkan 5 data terakhir
 	fmt.Println("5 Self-Assessment Terakhir:")
 	start := jumlahData - 5
 	if start < 0 {
@@ -82,4 +80,42 @@ func Tampilkan5Terakhir() {
 	for i := jumlahData - 1; i >= start; i-- {
 		fmt.Printf("[%s] Skor: %d\n", dataAssessment[i].IDUser, dataAssessment[i].SkorTotal)
 	}
+}
+
+func UbahAssessment(id string) {
+    idx := SequentialSearch(id)
+    if idx == -1 {
+        fmt.Println("Data tidak ditemukan.")
+        return
+    }
+
+    fmt.Println("Data ditemukan. Silakan masukkan data baru.")
+    jawabanBaru := InputJawaban()
+    tanggalBaru := InputTanggal()
+
+    skor := 0
+    for _, j := range jawabanBaru {
+        skor += j
+    }
+
+    dataAssessment[idx].Jawaban = jawabanBaru
+    dataAssessment[idx].Tanggal = tanggalBaru
+    dataAssessment[idx].SkorTotal = skor
+
+    fmt.Println("Data berhasil diubah.")
+}
+
+func HapusAssessment(id string) {
+    idx := SequentialSearch(id)
+    if idx == -1 {
+        fmt.Println("Data tidak ditemukan.")
+        return
+    }
+
+    for i := idx; i < jumlahData-1; i++ {
+        dataAssessment[i] = dataAssessment[i+1]
+    }
+
+    jumlahData--
+    fmt.Println("Data berhasil dihapus.")
 }
