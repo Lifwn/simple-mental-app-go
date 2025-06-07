@@ -28,7 +28,7 @@ func main() {
 			id := InputString("Masukkan ID untuk dicari: ")
 			idx := SequentialSearch(id)
 			if idx != -1 {
-				fmt.Println("Ditemukan:", dataAssessment[idx])
+				fmt.Println("Ditemukan")
 			} else {
 				fmt.Println("Tidak ditemukan.")
 			}
@@ -37,7 +37,7 @@ func main() {
 			id := InputString("Masukkan ID (pastikan data sudah terurut): ")
 			idx := BinarySearch(id)
 			if idx != -1 {
-				fmt.Println("Ditemukan:", dataAssessment[idx])
+				fmt.Println("Ditemukan")
 			} else {
 				fmt.Println("Tidak ditemukan.")
 			}

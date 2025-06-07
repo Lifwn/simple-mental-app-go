@@ -24,17 +24,26 @@ func TambahAssessment(id string, jawaban [10]int, tanggal time.Time) {
 	}
 
 	jumlahData++
+	fmt.Println("Skor Total Anda:", skor)
+	fmt.Println("Interpretasi Skor Anda:", InterpretasiSkor(skor))
 	fmt.Println("Data berhasil ditambahkan.")
 }
 
 func SequentialSearch(id string) int {
 	for i := 0; i < jumlahData; i++ {
 		if dataAssessment[i].IDUser == id {
+			fmt.Println("Data ditemukan (Sequential Search):")
+			fmt.Println("ID       :", dataAssessment[i].IDUser)
+			fmt.Println("Tanggal  :", dataAssessment[i].Tanggal.Format("2006-01-02"))
+			fmt.Println("Skor     :", dataAssessment[i].SkorTotal)
+			fmt.Println("Interpretasi:", InterpretasiSkor(dataAssessment[i].SkorTotal))
 			return i
 		}
 	}
+	// fmt.Println("Data tidak ditemukan.")
 	return -1
 }
+
 
 func BinarySearch(id string) int {
 	low := 0
@@ -43,6 +52,11 @@ func BinarySearch(id string) int {
 	for low <= high {
 		mid := (low + high) / 2
 		if dataAssessment[mid].IDUser == id {
+			fmt.Println("Data ditemukan (Binary Search):")
+			fmt.Println("ID       :", dataAssessment[mid].IDUser)
+			fmt.Println("Tanggal  :", dataAssessment[mid].Tanggal.Format("2006-01-02"))
+			fmt.Println("Skor     :", dataAssessment[mid].SkorTotal)
+			fmt.Println("Interpretasi:", InterpretasiSkor(dataAssessment[mid].SkorTotal))
 			return mid
 		} else if dataAssessment[mid].IDUser < id {
 			low = mid + 1
@@ -50,8 +64,10 @@ func BinarySearch(id string) int {
 			high = mid - 1
 		}
 	}
+	fmt.Println("Data tidak ditemukan.")
 	return -1
 }
+
 
 func SelectionSortBySkor(ascending bool) {
 	for i := 0; i < jumlahData-1; i++ {
@@ -78,9 +94,13 @@ func Tampilkan5Terakhir() {
 		start = 0
 	}
 	for i := jumlahData - 1; i >= start; i-- {
-		fmt.Printf("[%s] Skor: %d\n", dataAssessment[i].IDUser, dataAssessment[i].SkorTotal)
+		fmt.Printf("[%s] Tanggal: %s\n", dataAssessment[i].IDUser, dataAssessment[i].Tanggal.Format("2006-01-02"))
+		fmt.Printf("Skor: %d\n", dataAssessment[i].SkorTotal)
+		fmt.Println("Interpretasi:", InterpretasiSkor(dataAssessment[i].SkorTotal))
+		fmt.Println("----------------------------")
 	}
 }
+
 
 func UbahAssessment(id string) {
     idx := SequentialSearch(id)
