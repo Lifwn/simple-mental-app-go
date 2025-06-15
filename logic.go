@@ -160,26 +160,48 @@ func InsertionSortByTanggal(ascending bool) {
     }
 }
 
-func RataRataSkorSebulan(id string) {
-    totalSkor := 0
-    jumlah := 0
-    sekarang := time.Now()
+// func RataRataSkorSebulan(id string) {
+//     totalSkor := 0
+//     jumlah := 0
+//     sekarang := time.Now()
 
-    for i := 0; i < jumlahData; i++ {
-        if dataAssessment[i].IDUser == id {
-            selisih := sekarang.Sub(dataAssessment[i].Tanggal)
-            if selisih.Hours() <= 720 { // 30 hari * 24 jam
-                totalSkor += dataAssessment[i].SkorTotal
-                jumlah++
-            }
-        }
-    }
+//     for i := 0; i < jumlahData; i++ {
+//         if dataAssessment[i].IDUser == id {
+//             selisih := sekarang.Sub(dataAssessment[i].Tanggal)
+//             if selisih.Hours() <= 720 { // 30 hari * 24 jam
+//                 totalSkor += dataAssessment[i].SkorTotal
+//                 jumlah++
+//             }
+//         }
+//     }
 
-    if jumlah == 0 {
-        fmt.Println("Tidak ada data dalam 1 bulan terakhir.")
-        return
-    }
+//     if jumlah == 0 {
+//         fmt.Println("Tidak ada data dalam 1 bulan terakhir.")
+//         return
+//     }
 
-    rata := float64(totalSkor) / float64(jumlah)
-    fmt.Printf("Rata-rata skor self-assessment %s dalam 1 bulan terakhir: %.2f\n", id, rata)
+//     rata := float64(totalSkor) / float64(jumlah)
+//     fmt.Printf("Rata-rata skor self-assessment %s dalam 1 bulan terakhir: %.2f\n", id, rata)
+// }
+func RataRataSkorSebulan() {
+	totalSkor := 0
+	jumlah := 0
+	sekarang := time.Now()
+
+	for i := 0; i < jumlahData; i++ {
+		selisih := sekarang.Sub(dataAssessment[i].Tanggal)
+		if selisih.Hours() <= 720 {
+			totalSkor += dataAssessment[i].SkorTotal
+			jumlah++
+		}
+	}
+
+	if jumlah == 0 {
+		fmt.Println("Tidak ada data dalam 1 bulan terakhir.")
+		return
+	}
+
+	rata := float64(totalSkor) / float64(jumlah)
+	fmt.Printf("Rata-rata skor semua assessment dalam 1 bulan terakhir: %.2f\n", rata)
 }
+

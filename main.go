@@ -13,7 +13,7 @@ func main() {
 		fmt.Println("6. Ubah Data Assessment")
 		fmt.Println("7. Hapus Data Assessment")
 		fmt.Println("8. Urutkan berdasarkan Tanggal (Insertion Sort)")
-		fmt.Println("9. Rata-rata skor 1 bulan terakhir berdasarkan ID")
+		fmt.Println("9. Rata-rata skor 1 bulan terakhir")
 		fmt.Println("0. Keluar")
 		pilihan := InputString("Pilih: ")
 
@@ -70,8 +70,8 @@ func main() {
 			}
 
 			case "9":
-				id := InputString("Masukkan ID pengguna: ")
-				RataRataSkorSebulan(id)
+				// id := InputString("Masukkan ID pengguna: ")
+				RataRataSkorSebulan()
 				
 		case "0":
 			return
