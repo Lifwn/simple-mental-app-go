@@ -31,16 +31,25 @@ func TambahAssessment(id string, jawaban [10]int, tanggal time.Time) {
 
 func SequentialSearch(id string) int {
 	for i := 0; i < jumlahData; i++ {
-		if dataAssessment[i].IDUser == id {
-			fmt.Println("Data ditemukan (Sequential Search):")
-			fmt.Println("ID       :", dataAssessment[i].IDUser)
-			fmt.Println("Tanggal  :", dataAssessment[i].Tanggal.Format("2006-01-02"))
-			fmt.Println("Skor     :", dataAssessment[i].SkorTotal)
-			fmt.Println("Interpretasi:", InterpretasiSkor(dataAssessment[i].SkorTotal))
+		// Menggunakan variabel lokal/pointer agar akses field lebih bersih & efisien
+		item := &dataAssessment[i]
+
+		if item.IDUser == id {
+			// Menggunakan multiline string (backticks) agar blok print ringkas & mudah dibaca
+			fmt.Printf("Data ditemukan (Sequential Search):\n"+
+				"ID          : %s\n"+
+				"Tanggal     : %s\n"+
+				"Skor        : %d\n"+
+				"Interpretasi: %s\n",
+				item.IDUser,
+				item.Tanggal.Format("2006-01-02"),
+				item.SkorTotal,
+				InterpretasiSkor(item.SkorTotal),
+			)
 			return i
 		}
 	}
-	// fmt.Println("Data tidak ditemukan.")
+
 	return -1
 }
 
