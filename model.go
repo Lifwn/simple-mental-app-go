@@ -23,5 +23,8 @@ func (a *Assessment) Print(title string) {
 }
 
 const MaxData = 100
+
 var dataAssessment [MaxData]Assessment
 var jumlahData int = 0
+
+/* token = afawe1348719ydfhi19wFGI19 */
