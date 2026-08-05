@@ -5,17 +5,7 @@ import "fmt"
 
 func main() {
 	for {
-		fmt.Println("\n==== Menu ====")
-		fmt.Println("1. Tambah Self-Assessment")
-		fmt.Println("2. Cari dengan Sequential Search")
-		fmt.Println("3. Cari dengan Binary Search (butuh data terurut)")
-		fmt.Println("4. Urutkan berdasarkan Skor (Selection Sort)")
-		fmt.Println("5. Tampilkan 5 terakhir")
-		fmt.Println("6. Ubah Data Assessment")
-		fmt.Println("7. Hapus Data Assessment")
-		fmt.Println("8. Urutkan berdasarkan Tanggal (Insertion Sort)")
-		fmt.Println("9. Rata-rata skor 1 bulan terakhir")
-		fmt.Println("0. Keluar")
+		TampilkanMenu()
 		pilihan := InputString("Pilih: ")
 
 		switch pilihan {
@@ -70,9 +60,8 @@ func main() {
 				fmt.Println("Pilihan tidak valid.")
 			}
 
-			case "9":
-				// id := InputString("Masukkan ID pengguna: ")
-				RataRataSkorSebulan()
+		case "9":
+			RataRataSkorSebulan()
 				
 		case "0":
 			return

@@ -11,10 +11,7 @@ func TambahAssessment(id string, jawaban [10]int, tanggal time.Time) {
 		return
 	}
 
-	skor := 0
-	for _, j := range jawaban {
-		skor += j
-	}
+	skor := HitungSkor(jawaban)
 
 	dataAssessment[jumlahData] = Assessment{
 		IDUser:    id,
@@ -31,41 +28,22 @@ func TambahAssessment(id string, jawaban [10]int, tanggal time.Time) {
 
 func SequentialSearch(id string) int {
 	for i := 0; i < jumlahData; i++ {
-		// Menggunakan variabel lokal/pointer agar akses field lebih bersih & efisien
-		item := &dataAssessment[i]
-
-		if item.IDUser == id {
-			// Menggunakan multiline string (backticks) agar blok print ringkas & mudah dibaca
-			fmt.Printf("Data ditemukan (Sequential Search):\n"+
-				"ID          : %s\n"+
-				"Tanggal     : %s\n"+
-				"Skor        : %d\n"+
-				"Interpretasi: %s\n",
-				item.IDUser,
-				item.Tanggal.Format("2006-01-02"),
-				item.SkorTotal,
-				InterpretasiSkor(item.SkorTotal),
-			)
+		if dataAssessment[i].IDUser == id {
+			dataAssessment[i].Print("Data ditemukan (Sequential Search):")
 			return i
 		}
 	}
-
 	return -1
 }
 
 
 func BinarySearch(id string) int {
-	low := 0
-	high := jumlahData - 1
+	low, high := 0, jumlahData-1
 
 	for low <= high {
 		mid := (low + high) / 2
 		if dataAssessment[mid].IDUser == id {
-			fmt.Println("Data ditemukan (Binary Search):")
-			fmt.Println("ID       :", dataAssessment[mid].IDUser)
-			fmt.Println("Tanggal  :", dataAssessment[mid].Tanggal.Format("2006-01-02"))
-			fmt.Println("Skor     :", dataAssessment[mid].SkorTotal)
-			fmt.Println("Interpretasi:", InterpretasiSkor(dataAssessment[mid].SkorTotal))
+			dataAssessment[mid].Print("Data ditemukan (Binary Search):")
 			return mid
 		} else if dataAssessment[mid].IDUser < id {
 			low = mid + 1
@@ -82,14 +60,9 @@ func SelectionSortBySkor(ascending bool) {
 	for i := 0; i < jumlahData-1; i++ {
 		idx := i
 		for j := i + 1; j < jumlahData; j++ {
-			if ascending {
-				if dataAssessment[j].SkorTotal < dataAssessment[idx].SkorTotal {
-					idx = j
-				}
-			} else {
-				if dataAssessment[j].SkorTotal > dataAssessment[idx].SkorTotal {
-					idx = j
-				}
+			if (ascending && dataAssessment[j].SkorTotal < dataAssessment[idx].SkorTotal) || 
+			   (!ascending && dataAssessment[j].SkorTotal > dataAssessment[idx].SkorTotal) {
+				idx = j
 			}
 		}
 		dataAssessment[i], dataAssessment[idx] = dataAssessment[idx], dataAssessment[i]
@@ -103,9 +76,7 @@ func Tampilkan5Terakhir() {
 		start = 0
 	}
 	for i := jumlahData - 1; i >= start; i-- {
-		fmt.Printf("[%s] Tanggal: %s\n", dataAssessment[i].IDUser, dataAssessment[i].Tanggal.Format("2006-01-02"))
-		fmt.Printf("Skor: %d\n", dataAssessment[i].SkorTotal)
-		fmt.Println("Interpretasi:", InterpretasiSkor(dataAssessment[i].SkorTotal))
+		dataAssessment[i].Print(fmt.Sprintf("\n[%s]", dataAssessment[i].IDUser))
 		fmt.Println("----------------------------")
 	}
 }
@@ -120,16 +91,10 @@ func UbahAssessment(id string) {
 
     fmt.Println("Data ditemukan. Silakan masukkan data baru.")
     jawabanBaru := InputJawaban()
-    tanggalBaru := InputTanggal()
-
-    skor := 0
-    for _, j := range jawabanBaru {
-        skor += j
-    }
 
     dataAssessment[idx].Jawaban = jawabanBaru
-    dataAssessment[idx].Tanggal = tanggalBaru
-    dataAssessment[idx].SkorTotal = skor
+    dataAssessment[idx].Tanggal = InputTanggal()
+    dataAssessment[idx].SkorTotal = HitungSkor(jawabanBaru)
 
     fmt.Println("Data berhasil diubah.")
 }
@@ -154,16 +119,10 @@ func InsertionSortByTanggal(ascending bool) {
         temp := dataAssessment[i]
         j := i - 1
 
-        if ascending {
-            for j >= 0 && dataAssessment[j].Tanggal.After(temp.Tanggal) {
-                dataAssessment[j+1] = dataAssessment[j]
-                j--
-            }
-        } else {
-            for j >= 0 && dataAssessment[j].Tanggal.Before(temp.Tanggal) {
-                dataAssessment[j+1] = dataAssessment[j]
-                j--
-            }
+        for j >= 0 && ((ascending && dataAssessment[j].Tanggal.After(temp.Tanggal)) || 
+                       (!ascending && dataAssessment[j].Tanggal.Before(temp.Tanggal))) {
+            dataAssessment[j+1] = dataAssessment[j]
+            j--
         }
         dataAssessment[j+1] = temp
     }
